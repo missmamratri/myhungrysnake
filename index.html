@@ -433,68 +433,6 @@ frameborder="1"
     }
 
     </script>
-    <!-- Kontrol D-Pad untuk HP yang Stabil -->
-<div id="mobile-controls" style="text-align: center; margin-top: 15px; display: none; user-select: none; -webkit-user-select: none;">
-    <button onmousedown="sendKey(38)" ontouchstart="event.preventDefault(); sendKey(38);" style="width: 65px; height: 65px; font-size: 26px; margin: 5px; border-radius: 15px; background-color: #ffffff; border: 3px solid black; active {background-color: #ddd;}">⬆️</button><br>
-    <button onmousedown="sendKey(37)" ontouchstart="event.preventDefault(); sendKey(37);" style="width: 65px; height: 65px; font-size: 26px; margin: 5px; border-radius: 15px; background-color: #ffffff; border: 3px solid black; active {background-color: #ddd;}">⬅️</button>
-    <button onmousedown="sendKey(40)" ontouchstart="event.preventDefault(); sendKey(40);" style="width: 65px; height: 65px; font-size: 26px; margin: 5px; border-radius: 15px; background-color: #ffffff; border: 3px solid black; active {background-color: #ddd;}">⬇️</button>
-    <button onmousedown="sendKey(39)" ontouchstart="event.preventDefault(); sendKey(39);" style="width: 65px; height: 65px; font-size: 26px; margin: 5px; border-radius: 15px; background-color: #ffffff; border: 3px solid black; active {background-color: #ddd;}">➡️</button>
-</div>
-
-<script>
-  // Pastikan D-Pad hanya tampil di HP/Tablet
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      document.getElementById('mobile-controls').style.display = 'block';
-  }
-
-  function sendKey(keyCode) {
-      // 1. Dapatkan elemen canvas utama game Pygame
-      const canvas = document.getElementById('canvas');
-      
-      // 2. Paksa fokus browser tetap terkunci di dalam game
-      window.focus();
-      if (canvas) {
-          canvas.focus();
-          canvas.click();
-      }
-      
-      let key = "";
-      if(keyCode === 38) key = "ArrowUp";
-      if(keyCode === 40) key = "ArrowDown";
-      if(keyCode === 37) key = "ArrowLeft";
-      if(keyCode === 39) key = "ArrowRight";
-
-      // 3. Simulasikan aksi menekan tombol (KeyDown)
-      const evDown = new KeyboardEvent('keydown', {
-          keyCode: keyCode,
-          which: keyCode,
-          key: key,
-          code: key,
-          bubbles: true,
-          cancelable: true
-      });
-      
-      // 4. Kirimkan sinyal langsung ke window dan dokumen utama web
-      document.dispatchEvent(evDown);
-      if (canvas) canvas.dispatchEvent(evDown);
-
-      // 5. Kirimkan aksi melepas tombol (KeyUp) setelah jeda milidetik singkat
-      // Ini sangat krusial agar sistem Pygame tahu tombol sudah selesai ditekan
-      setTimeout(() => {
-          const evUp = new KeyboardEvent('keyup', {
-              keyCode: keyCode,
-              which: keyCode,
-              key: key,
-              code: key,
-              bubbles: true,
-              cancelable: true
-          });
-          document.dispatchEvent(evUp);
-          if (canvas) canvas.dispatchEvent(evUp);
-      }, 50);
-  }
-</script>
-
 
 </body>
 </html>
