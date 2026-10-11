@@ -433,6 +433,42 @@ frameborder="1"
     }
 
     </script>
+    <!-- Kontrol D-Pad untuk HP -->
+<div id="mobile-controls" style="text-align: center; margin-top: 15px; display: none;">
+    <button onclick="sendKey(38)" style="width: 60px; height: 60px; font-size: 24px; margin: 5px; border-radius: 10px; background-color: #ffffff; border: 2px solid black;">⬆️</button><br>
+    <button onclick="sendKey(37)" style="width: 60px; height: 60px; font-size: 24px; margin: 5px; border-radius: 10px; background-color: #ffffff; border: 2px solid black;">⬅️</button>
+    <button onclick="sendKey(40)" style="width: 60px; height: 60px; font-size: 24px; margin: 5px; border-radius: 10px; background-color: #ffffff; border: 2px solid black;">⬇️</button>
+    <button onclick="sendKey(39)" style="width: 60px; height: 60px; font-size: 24px; margin: 5px; border-radius: 10px; background-color: #ffffff; border: 2px solid black;">➡️</button>
+</div>
+
+<script>
+  // Deteksi jika pengguna membuka lewat HP
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      document.getElementById('mobile-controls').style.display = 'block';
+  }
+
+  // Fungsi mengirim ketukan keyboard virtual ke Pygame
+  function sendKey(keyCode) {
+      window.focus();
+      const canvas = document.getElementById('canvas');
+      if (canvas) canvas.focus();
+      
+      let key = "";
+      if(keyCode === 38) key = "ArrowUp";
+      if(keyCode === 40) key = "ArrowDown";
+      if(keyCode === 37) key = "ArrowLeft";
+      if(keyCode === 39) key = "ArrowRight";
+
+      const ev = new KeyboardEvent('keydown', {
+          keyCode: keyCode,
+          which: keyCode,
+          key: key,
+          code: key,
+          bubbles: true
+      });
+      document.dispatchEvent(ev);
+  }
+</script>
 
 </body>
 </html>
